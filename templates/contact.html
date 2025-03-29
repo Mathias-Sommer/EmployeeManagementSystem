@@ -26,25 +26,40 @@
     </header>
 
     <main>
-      <div class="login-container">
-        <div class="login-input">
+      <div class="contact-container">
+        <div class="contact-input">
           <form>
-            <h2>Login</h2>
-            <p>Username</p>
+            <h2>Contact formular</h2>
+            <p>First name</p>
             <input
               type="text"
-              name="username"
-              id="username"
-              placeholder="Username"
+              name="firstname"
+              id="firstname"
+              placeholder="First name"
             />
-            <p>Password</p>
+            <p>Last name</p>
             <input
-              type="password"
-              name="password"
-              id="password"
-              placeholder="Password"
+              type="text"
+              name="lastname"
+              id="lastname"
+              placeholder="Last name"
             />
-            <button>Login</button>
+            <p>E-mail</p>
+            <input
+              type="email"
+              name="email"
+              id="email"
+              placeholder="E-mail address"
+            />
+            <p>Message</p>
+            <textarea
+              id="message"
+              name="message"
+              rows="6"
+              cols="50"
+              placeholder="Type your message here..."
+            ></textarea>
+            <button>Send message</button>
           </form>
         </div>
       </div>
