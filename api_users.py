@@ -5,43 +5,32 @@ URL = os.environ.get('API_URL_USERS')
 API_KEY = os.environ.get('API_KEY')
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
-def headerType(apiAuthType):
-    headers = {
-        "apikey": apiAuthType,
+def headerType():
+    return {
+        "apikey": API_KEY,
         "Content-Type": "application/json"
     }
-    return headers
 
-def get_user():
-    headers = headerType(API_KEY)
+def get_user(username, password):
+    headers = headerType()
     apiResponse = requests.get(URL, headers=headers) 
 
-    if apiResponse.status_code == 200:
-        extracted_apiResponse = []
+    if apiResponse.status_code != 200:
+        return {"error": "Failed to get API data", "status_code": apiResponse.status_code}
 
-        for row in apiResponse.json():
-            extracted_apiResponse.append({
-                'id': row.get('id'),
-                'username': row.get('username'),
-                'password': row.get('password'),
-                'email': row.get('email'),
-                'first_name': row.get('first_name'),
-                'last_name': row.get('last_name'),
-                'date_created': row.get('date_created'),
-                'last_password_change': row.get('last_password_change'),
-                'last_login': row.get('last_login'),
-                'is_active': row.get('is_active'),
-                'is_locked': row.get('is_locked')
-            })
-        
-        extracted_apiResponse.sort(key=lambda x: x['id'])
+    users = apiResponse.json()
+    user = None
 
-        print('API:', extracted_apiResponse)
-        return extracted_apiResponse
+    for u in users:
+        if u['username'] == username and u['password'] == password:
+            user = u
+
+    if user:
+        print('Found user:', user)
+        return user
     else:
-        return {
-            "Error": "Failed to get API data", "status code": apiResponse.status_code
-        }
+        print('No user matches in DB')
+        return None
 
 def create_user():
     return
